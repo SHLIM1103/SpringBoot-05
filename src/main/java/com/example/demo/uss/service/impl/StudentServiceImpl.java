@@ -27,4 +27,9 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.selectById(userid);
     }
 
+    @Override
+    public List<StudentDto> list() {
+        return studentMapper.selectAll();
+    }
+
 }

@@ -14,6 +14,25 @@
 	<title>AdminKit Demo - Web UI Kit &amp; Dashboard Template</title>
 
 	<link href="/mgr/css/app.css" rel="stylesheet">
+
+	<style>
+		table {
+		  font-family: arial, sans-serif;
+		  border-collapse: collapse;
+		  width: 100%;
+		}
+		
+		td, th {
+		  border: 1px solid #dddddd;
+		  text-align: left;
+		  padding: 8px;
+		}
+		
+		tr:nth-child(even) {
+		  background-color: #dddddd;
+		}
+		</style>
+
 </head>
 
 <body>
@@ -36,14 +55,14 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-profile.html">
-              <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+						<a id="students" class="sidebar-link" href="#">
+              <i class="align-middle" data-feather="user"></i> <span class="align-middle">학생목록</span>
             </a>
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-settings.html">
-              <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Settings</span>
+						<a id="teachers" class="sidebar-link" href="#">
+              <i class="align-middle" data-feather="settings"></i> <span class="align-middle">교사목록</span>
             </a>
 					</li>
 
@@ -281,8 +300,8 @@
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
-                <i class="align-middle" data-feather="settings"></i>
-              </a>
+                				<i class="align-middle" data-feather="settings"></i>
+             				 </a>
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
                 <img src="/mgr/img/avatars/avatar.jpg" class="avatar img-fluid rounded mr-1" alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>
@@ -577,6 +596,92 @@
 
 	<script src="/mgr/js/vendor.js"></script>
 	<script src="/mgr/js/app.js"></script>
+	
+	<script>
+		$('#students').click(e => {
+			$.getJSON(`/students`, d => {
+				let tr = ``
+				if(d.length != 0){
+					let i = 0
+					for(; i < d.length ; i++){
+						tr += `<tr>`
+							+ `<td>${d[i].stuNum}</td>`
+							+ `<td><a href="#" class="names" id="${d[i].userid}">${d[i].name}</a></td>`
+							+ `<td>${d[i].userid}</td>`
+							+ `<td>${d[i].ssn}</td>`
+							+ `<td>${d[i].regDate}</td>`
+							+ `<td>${d[i].subject}</td>`
+							+ `</tr>`
+						}
+				}else{
+					tr = `<td colspan="6"> 조회할 내용이 없습니다. </td>`
+				}
+					$(`main`).html(`<h2>학생 목록</h2>
+								<table>
+									<thead>
+										<tr>
+											<th>학번</th>
+											<th>이름</th>
+											<th>ID</th>
+											<th>생년월일</th>
+											<th>등록일</th>
+											<th>수강과목</th>
+										</tr>
+									</thead>
+									<tbody>
+										${tr}
+									</tbody>
+								</table>`)
+
+					$('.names').each(function(i){
+						$(this).click(e => {
+							localStorage.setItem("searchId", `${this.id}`)
+							location.href='/transfer/sym/mgr/student'
+						})
+					})
+			})
+		})
+
+		$('#teachers').click(e => {
+			$.getJSON(`/teachers`, d => {
+				let tr = ``
+				if(d.length != 0){
+					let i = 0
+					for(; i < d.length ; i++){
+						tr += `<tr>`
+							+ `<td>${d[i].teaNum}</td>`
+							+ `<td><a href="#" class="names" id="${d[i].name}">${d[i].name}</a></td>`
+							+ `<td>${d[i].subject}</td>`
+							+ `<td>${d[i].email}</td>`
+							+ `</tr>`
+						}
+					}else{
+						tr = `<td colspan="6"> 조회할 내용이 없습니다. </td>`
+				}
+				$(`main`).html(`<h2>교사 목록</h2>
+								<table>
+									<thead>
+										<tr>
+											<th>교사등록번호</th>
+											<th>교사명</th>
+											<th>담당과목</th>
+											<th>email</th>
+										</tr>
+									</thead>
+									<tbody>
+										${tr}
+									</tbody>
+								</table>`)
+
+					$('.names').each(function(i){
+						$(this).click(e => {
+							localStorage.setItem("searchName", `${this.id}`)
+							location.href='/transfer/sym/mgr/teacher'
+						})
+					})
+			})
+		})
+	</script>
 
 	<script>
 		$(function() {
@@ -648,6 +753,7 @@
 			});
 		});
 	</script>
+
 	<script>
 		$(function() {
 			// Pie chart

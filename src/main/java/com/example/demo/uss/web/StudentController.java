@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.example.demo.uss.service.StudentService;
@@ -17,10 +18,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
+@RequestMapping("/students")
 public class StudentController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired StudentService studentService;
-    @PostMapping("/students")
+
+    @PostMapping("")
     public Map<?,?> register(@RequestBody StudentDto student){
         logger.info("학생등록 정보: " + student.toString());
         var map = new HashMap<>();
@@ -28,7 +31,7 @@ public class StudentController {
         return map;
     }
     
-    @PostMapping("/students/login")
+    @PostMapping("/login")
     public Map<?,?> login(@RequestBody StudentDto student){
         logger.info("로그인 정보: " + student.toString());
         var map = new HashMap<>();
@@ -38,10 +41,15 @@ public class StudentController {
         return map;
     }
 
-    @GetMapping("/students/{userid}")
+    @GetMapping("/{userid}")
     public StudentDto profile(@PathVariable String userid){
         logger.info("프로필 정보: " + userid);
         return studentService.detail(userid);
+    }
+
+    @GetMapping("")
+    public List<?> list(){
+        return studentService.list();
     }
 }
 

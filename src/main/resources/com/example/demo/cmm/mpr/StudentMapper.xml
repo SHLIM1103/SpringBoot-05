@@ -13,4 +13,7 @@
                             resultType="com.example.demo.uss.service.model.StudentDto">
         select stu_num stuNum, userid, password, name, ssn, reg_date regDate, subject, profile_image profileImage from students where userid like #{value}
     </select>
+    <select id="selectAll" resultType="com.example.demo.uss.service.model.StudentDto">
+        select stu_num stuNum, userid, password, name, ssn, reg_date regDate, subject, profile_image profileImage from students
+    </select>
 </mapper>
