@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.example.demo.sym.service.ManagerService;
+import com.example.demo.sym.service.TeacherService;
 import com.example.demo.sym.service.model.ManagerDto;
 
 import org.slf4j.Logger;
@@ -19,7 +20,7 @@ public class ManagerController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     ManagerService managerService;
-
+    TeacherService teacherService;
     @PostMapping("/managers")
     public Map<?, ?> register(@RequestBody ManagerDto manager) {
         var map = new HashMap<>();
