@@ -8,11 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TeacherMapper {
-
-	int insert(TeacherDto teacher);
-
-	List<TeacherDto> selectAll();
-
-	TeacherDto selectByName(String name);
-
+	public int insert(TeacherDto teacher);
+	public List<TeacherDto> selectAll();
+	public TeacherDto selectByName(String name);
 }

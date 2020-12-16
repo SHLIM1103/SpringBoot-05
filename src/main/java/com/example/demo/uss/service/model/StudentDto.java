@@ -2,12 +2,10 @@ package com.example.demo.uss.service.model;
 
 import org.springframework.stereotype.Component;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Component
-@Getter
-@Setter
+@Data
 public class StudentDto {
     private String stuNum, userid, password, name, ssn, regDate, subject, profileImage;
 }

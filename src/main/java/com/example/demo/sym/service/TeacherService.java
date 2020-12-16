@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public interface TeacherService {
 	public int register(TeacherDto teacher);
-	public List<TeacherDto> list();
+	public List<?> list();
 	public TeacherDto detail(String name);
 
 }

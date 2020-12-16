@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudentMapper {
-	int insert(StudentDto student);
-	StudentDto login(StudentDto student);
-	StudentDto selectById(String userid);
-	List<StudentDto> selectAll();
+	public int insert(StudentDto student);
+	public StudentDto login(StudentDto student);
+	public StudentDto selectById(String userid);
+	public List<StudentDto> selectAll();
 }

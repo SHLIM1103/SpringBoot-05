@@ -20,7 +20,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<TeacherDto> list() {
+    public List<?> list() {
         return teacherMapper.selectAll();
     }
 

@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
 @RequestMapping("/teachers")
 public class TeacherController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired TeacherService teacherService;
     
+    @Autowired TeacherService teacherService;
     @PostMapping("")
     public Map<?, ?> register(@RequestBody TeacherDto teacher) {
         var map = new HashMap<>();
@@ -31,15 +31,15 @@ public class TeacherController {
         map.put("message", (teacherService.register(teacher) == 1) ? "SUCCESS" : "FAILURE");
         return map;
     }
+    
+    @GetMapping("")
+    public List<?> list(){
+        return teacherService.list();
+    }
 
     @GetMapping("/{name}")
     public TeacherDto profile(@PathVariable String name){
         logger.info("불러올 교사명: " + name);
         return teacherService.detail(name);
-    }
-
-    @GetMapping("")
-    public List<?> list(){
-        return teacherService.list();
     }
 }
