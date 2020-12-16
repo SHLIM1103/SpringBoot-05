@@ -29,4 +29,9 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.selectByName(name);
     }
 
+    @Override
+    public int update(TeacherDto teacher) {
+        return teacherMapper.update(teacher);
+    }
+
 }

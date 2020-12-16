@@ -675,8 +675,8 @@
 
 					$('.names').each(function(i){
 						$(this).click(e => {
-							localStorage.setItem("searchName", `${this.id}`)
-							location.href='/transfer/sym/mgr/teacher'
+							localStorage.setItem(`searchName`, `${this.id}`)
+							location.href=`/transfer/sym/mgr/teacher`
 						})
 					})
 			})
