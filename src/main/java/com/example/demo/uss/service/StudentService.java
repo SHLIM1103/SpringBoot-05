@@ -12,4 +12,6 @@ public interface StudentService {
 	public StudentDto login(StudentDto student);
 	public StudentDto detail(String userid);
 	public List<StudentDto> list();
+	public int update(StudentDto student);
+	public int delete(StudentDto student);
 }

@@ -534,35 +534,53 @@
 				$(`#updateSubject`).html(`<input id="changeSubject" type="text" value="${d.subject} "placeholder="${d.subject}">`)
 				$(`#updateEmail`).html(`<input id="changeEmail" type="text" value="${d.email}" placeholder="${d.email}">`)
 				$(`#updateAddr`).html(`<input type="text" placeholder="서울"><br />
-									   <button id="submit">수정확인</button><button id="cancel">수정취소</button>`)
-					$(`#submit`).click(e => {
-						alert(`수정완료!`)
+									   <button id="confirmUpdate">수정확인</button><button id="cancelUpdate">수정취소</button>`)
+					$(`#confirmUpdate`).click(e => {
+						
 						$.ajax({
 							url: `/teachers`,
 							type: `PUT`,
 							data: JSON.stringify({
 								teaNum: d.teaNum,
-								subject: ($(`#changeSubject`).val() === d.subject) ? d.subject : $(`#changeSubject`).val() ,
-								email: ($(`#changeEmail`).val() === d.email) ? d.email : $(`#changeEmail`).val()
+								subject: $(`#changeSubject`).val() ,
+								email: $(`#changeEmail`).val()
 							}),
 							dataType: `json`,
 							contentType: `application/json`,
 							success: d2 => {
 								if(d2.message === `SUCCESS`){
+									alert(`수정 완료!`)
 									location.href=`/transfer/sym/mgr/teacher`
 								}else{
-									alert(`수정실패! 다시 시도해주세요.`)
+									alert(`수정 실패! 다시 시도해 주세요.`)
 									location.href=`/transfer/sym/mgr/teacher`
 								}
 							},
-							error: e => {alert(`수정오류: ${e}`)}
+							error: e => {alert(`수정 오류: ${e}`)}
 						})					
 					})
-					$(`#cancel`).click(e => {location.href='/'})
-			
+					
+					$(`#cancelUpdate`).click(e => {location.href='/transfer/sym/mgr/teacher'})
 			})
 
 			$('#info-delete').click(e => {
+				$.ajax({
+					url: `/teachers`,
+					type: `DELETE`,
+					data: JSON.stringify({teaNum: d.teaNum}),
+					dataType: `json`,
+					contentType: `application/json`,
+					success: d2 => {
+						if(d2.message === `SUCCESS`){
+							alert(`삭제 완료!`)
+							location.href=`/transfer/sym/mgr/index`
+						}else{
+							alert(`삭제 실패! 다시 시도해 주세요.`)
+							location.href=`/transfer/sym/mgr/index`
+						}
+					},
+					error: e => {alert(`삭제 오류: ${e}`)}
+				})
 			
 			})
 		})

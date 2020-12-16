@@ -8,6 +8,7 @@ import com.example.demo.sym.service.TeacherService;
 import com.example.demo.sym.service.model.TeacherDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,6 +52,14 @@ public class TeacherController {
         logger.info("수정하는 교사 정보: " + teacher.toString());
         var map = new HashMap<>();
         map.put("message", (teacherService.update(teacher) == 1) ? "SUCCESS" : "FAILURE" );
+        return map;
+    }
+    
+    @DeleteMapping("")
+    public Map<?,?> delete(@RequestBody TeacherDto teacher){
+        logger.info("삭제하는 교사 정보: " + teacher.getTeaNum());
+        var map = new HashMap<>();
+        map.put("message", (teacherService.delete(teacher) == 1) ? "SUCCESS" : "FAILURE" );
         return map;
     }
 }

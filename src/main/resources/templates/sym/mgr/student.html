@@ -525,18 +525,58 @@
 			$(`#about`).html(`<h5 class="h6 card-title">About</h5>
 									<ul class="list-unstyled mb-0">
 										<li class="mb-1"><span data-feather="home" class="feather-sm mr-1"></span> 학생번호: <a href="#">${d.stuNum}</a></li>
-										<li class="mb-1"><span data-feather="briefcase" class="feather-sm mr-1"></span> 생년월일 : <a id="updateBirth" href="#">${d.ssn}</a></li>
+										<li class="mb-1"><span data-feather="briefcase" class="feather-sm mr-1"></span> 생년월일 : <a href="#">${d.ssn}</a></li>
 										<li class="mb-1"><span data-feather="map-pin" class="feather-sm mr-1"></span> 주소 : <a id="updateAddr" href="#">서울</a></li>
 									</ul>`)
 			$(`#update-info`).click(e => {
-				$(`#updateSubject`).html(`<input type="text" placeholder="${d.subject}">`)
-				$(`#updateBirth`).html(`<input type="text" placeholder="${d.ssn}">`)
+				$(`#updateSubject`).html(`<input id="changeSubject" type="text" value="${d.subject}" placeholder="${d.subject}">`)
 				$(`#updateAddr`).html(`<input type="text" placeholder="서울"><br />
-									   <button>수정확인</button><button>수정취소</button>`)
+									   <button id="confirmUpdate">수정확인</button><button id="cancelUpdate">수정취소</button>`)
+					$(`#confirmUpdate`).click(e => {
+						
+						$.ajax({
+							url: `/students`,
+							type: `PUT`,
+							data: JSON.stringify({
+								stuNum: d.stuNum,
+								subject: $(`#changeSubject`).val()
+							}),
+							dataType: `json`,
+							contentType: `application/json`,
+							success: d2 => {
+								if(d2.message === `SUCCESS`){
+									alert(`수정 완료!`)
+									location.href=`/transfer/sym/mgr/student`
+								}else{
+									alert(`수정 실패! 다시 시도해 주세요.`)
+									location.href=`/transfer/sym/mgr/student`
+								}
+							},
+							error: e => {alert(`수정 오류: ${e}`)}
+						})
+					})
+
+					$(`#cancelUpdate`).click(e => {location.href=`/transfer/sym/mgr/student`})
 			})
 
 			$(`#delete-info`).click(e => {
-
+				$.ajax({
+					url: `/students`,
+					type: `DELETE`,
+					data: JSON.stringify({stuNum: d.stuNum}),
+					dataType: `json`,
+					contentType: `application/json`,
+					success: d2 => {
+						if(d2.message === `SUCCESS`){
+							alert(`삭제 완료!`)
+							location.href=`/transfer/sym/mgr/index`
+						}else{
+							alert(`삭제 실패! 다시 시도해 주세요.`)
+							location.href=`/transfer/sym/mgr/index`
+						}
+					},
+					error: e => {alert(`삭제 오류: ${e}`)}
+				})
 			})
 		})
 	</script>

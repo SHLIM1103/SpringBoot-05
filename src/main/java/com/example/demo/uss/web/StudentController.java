@@ -1,8 +1,10 @@
 package com.example.demo.uss.web;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,6 +52,22 @@ public class StudentController {
     @GetMapping("")
     public List<?> list(){
         return studentService.list();
+    }
+
+    @PutMapping("")
+    public Map<?,?> update(@RequestBody StudentDto student){
+        logger.info("수정하려는 학생: " + student.toString());
+        var map = new HashMap<>();
+        map.put("message", (studentService.update(student) == 1) ? "SUCCESS" : "FAILURE");
+        return map;
+    }
+    
+    @DeleteMapping("")
+    public Map<?,?> delete(@RequestBody StudentDto student){
+        logger.info("삭제하려는 학생: " + student.toString());
+        var map = new HashMap<>();
+        map.put("message", (studentService.delete(student) == 1) ? "SUCCESS" : "FAILURE");
+        return map;
     }
 }
 
